@@ -77,10 +77,10 @@ console.log("Message received from " + message.from + ": " + message.body);
     if(message.body.startsWith("#")) {
         runCompletion(message.body.substring(1)).then(result => message.reply(result));
     }
-    
+
     // generate image
     if(message.body.startsWith("/")) {
-        GenerateImage(message.body.substring(1), message);	
+        GenerateImage(message.body.substring(1), message);
 	}
 
     // toggle translation tool
@@ -88,7 +88,7 @@ console.log("Message received from " + message.from + ": " + message.body);
         console.log("Toggle translate for " + message.from + "");
         toggleTranslate(message);
     }
-	
+
     // transcribe audio messages and if translation is enabled, translate the text from and to ukranian
     if(message.hasMedia) {
         if(message.type == 'audio' || message.type == 'ptt'){
@@ -144,13 +144,13 @@ async function GenerateImage(messagetext, message) {
 						n: 1,
 						size: "1024x1024",
 					});
-					
+
 	image_url = response.data.data[0].url;
-	
+
     request.get(image_url, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             data = Buffer.from(body).toString('base64');
-        
+
             const media = new MessageMedia('image/png', data);
             message.reply(media);
         }
@@ -170,7 +170,7 @@ async function transcribeAudio(audio, message, translation) {
 
     // convert base64 to buffer
     buffer = Buffer.from(audio, 'base64')
-    
+
     // write file to disk
     fs.writeFileSync(filepathogg, buffer);
     console.log('file written to disk as ' + filepathogg + ' (' + buffer.length + ' bytes)');
@@ -197,7 +197,7 @@ async function transcribeAudio(audio, message, translation) {
 }
 
 // Convert Audio
-function convertAudio(input, output) {    
+function convertAudio(input, output) {
     return new Promise((resolve,reject)=>{
       ffmpeg(input)
          .saveToFile(output)
@@ -215,10 +215,10 @@ function convertAudio(input, output) {
 function getUserData(user, field = false) {
     rawdata = fs.readFileSync(userdatajson);
     data = JSON.parse(rawdata);
-    
+
     if (!data["users"][user]) {return false;}
     if (!field) {return data["users"][user];}
-    if (!data["users"][user][field]) {return false;} 
+    if (!data["users"][user][field]) {return false;}
     else {return data["users"][user][field];}
 }
 
