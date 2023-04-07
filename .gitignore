@@ -1,0 +1,9 @@
+.wwebjs_auth/*
+audio/*
+data/*
+node_modules/*
+.env
+err.log
+out.log
+package-lock.json
+data/userdata.json
